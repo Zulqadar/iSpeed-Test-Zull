@@ -189,7 +189,7 @@ app.post('/testSpeed', function (req, res) {
 	
 });
 
-var server = app.listen(3000, function () { });
+var server = app.listen(5000, function () { });
 
 
 let getData = (res) => {
