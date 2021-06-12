@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script></script>
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .myCss {
+            display: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            /* width: 10%; */
+            display: none;
+        }
+
+        .btncls {
+            background-color: #B80C4D;
+            border: #2e6da4;
+            font-family: Arial, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            border-radius: 4px;
+            line-height: 1.5;
+            text-decoration: none
+        }
+        .btncls:hover{
+            cursor: pointer;
+        }
+        .download
+        {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            display: none;
+        }
+        .upload{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-success btnCheckSpeed btncls" style="display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:10%;
+            width: 10%;">Check Speed
+            </button>
+            <br><br>
+            <div class="loader myCss"></div>
+          <h1 class="download" style="color:green"></h1>
+ 
+           <h1 class="upload" style="color:green"></h1>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        function sizeFormatter(x) {
+            let l = 0, n = parseInt(x, 10) || 0;
+            while (n >= 1024 && ++l) {
+                n = n / 1024;
+            }
+            return (n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + units[l]);
+        }
+
+        $('.btnCheckSpeed').click(function () {
+            $('.myCss').show();
+            $.post('/testSpeed', {}, function (data) {
+                if(data!==null)
+                {
+                    console.log(data, "Data")
+                    $('.download').html('Download Speed : '+data.download+" Mbps");
+                    $('.download').show();
+                    $('.upload').html('Upload Speed : '+data.upload+" Mbps");
+                    $('.upload').show();
+                    $('.myCss').hide();
+                }
+              
+            });
+        });
+
+    </script>
+</body>
+
+</html>
